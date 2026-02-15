@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<!-- Mirrored from uv.94v.net/ by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 15 Feb 2026 03:48:08 GMT -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧰 UV 工具箱 - 专业版</title>
+<link rel="stylesheet" href="../cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --bg: #f5f5f7;
+  --card: rgba(255,255,255,0.85);
+  --border: rgba(0,0,0,0.08);
+  --text: #1d1d1f;
+  --muted: #6e6e73;
+  --primary: #0071e3;
+  --primary-light: color-mix(in srgb, var(--primary) 20%, transparent);
+  --secondary: #5856d6;
+  --success: #30d158;
+  --danger: #ff453a;
+  --warning: #ff9f0a;
+  --radius: 18px;
+  --shadow: 0 8px 30px rgba(0,0,0,0.08);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,0.12);
+  --blur: blur(20px);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --gradient-primary: linear-gradient(135deg, #0071e3 0%, #5856d6 100%);
+  --gradient-success: linear-gradient(135deg, #30d158 0%, #34c759 100%);
+  --gradient-warning: linear-gradient(135deg, #ff9f0a 0%, #ff9500 100%);
+}
+[data-theme="dark"] {
+  --bg: #0b0b0d;
+  --card: rgba(28,28,30,0.85);
+  --border: rgba(255,255,255,0.12);
+  --text: #f5f5f7;
+  --muted: #a1a1a6;
+  --primary: #0a84ff;
+  --secondary: #5e5ce6;
+  --shadow: 0 8px 30px rgba(0,0,0,0.5);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,0.8);
+  --gradient-primary: linear-gradient(135deg, #0a84ff 0%, #5e5ce6 100%);
+}
+* { 
+  box-sizing:border-box; 
+  margin:0; 
+  padding:0; 
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+body { 
+  background:var(--bg); 
+  color:var(--text); 
+  transition: var(--transition);
+  min-height: 100vh;
+  position: relative;
+}
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(0, 113, 227, 0.05) 0%, transparent 20%),
+    radial-gradient(circle at 90% 80%, rgba(88, 86, 214, 0.05) 0%, transparent 20%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* 头部 */
+header {
+  position:sticky;
+  top:0;
+  z-index:100;
+  backdrop-filter: var(--blur);
+  background: color-mix(in srgb,var(--bg) 85%,transparent);
+  border-bottom:1px solid var(--border);
+  padding:14px 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.header-container {
+  max-width:1400px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+/* 标题区域 */
+.title-section {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+  flex-shrink:0;
+}
+.logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3);
+}
+.title-section h1 {
+  font-size:clamp(20px, 3vw, 28px);
+  font-weight:800;
+  letter-spacing:-0.5px;
+  background: var(--gradient-primary);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  white-space:nowrap;
+}
+
+/* 统计数据 - 已删除 */
+/* .stats {
+  display: flex;
+  gap: 16px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.stat-item i {
+  font-size: 12px;
+} */
+
+/* 搜索和切换按钮区域 */
+.header-controls {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex:1;
+  max-width:600px;
+  justify-content:flex-end;
+}
+
+/* 搜索框 */
+.search { 
+  position:relative; 
+  flex:1;
+  max-width:400px;
+}
+.search input {
+  width:100%;
+  height:44px;
+  padding:0 50px 0 44px;
+  border-radius:14px;
+  border:1.5px solid var(--border);
+  background:var(--card);
+  backdrop-filter:var(--blur);
+  font-size:15px;
+  color:var(--text);
+  transition: var(--transition);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.search input:focus {
+  outline:none;
+  border-color:var(--primary);
+  box-shadow:0 0 0 4px var(--primary-light), 0 4px 12px rgba(0, 113, 227, 0.2);
+}
+.search .search-icon {
+  position:absolute;
+  left:14px;
+  top:50%;
+  transform:translateY(-50%);
+  color: var(--muted);
+  font-size: 14px;
+}
+.search .clear {
+  position:absolute;
+  right:14px;
+  top:50%;
+  transform:translateY(-50%);
+  cursor:pointer;
+  font-size:16px;
+  display:none;
+  background:none;
+  border:none;
+  color:var(--muted);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+.search .clear:hover {
+  background: var(--border);
+  color: var(--text);
+}
+.search input:not(:placeholder-shown) ~ .clear { display:flex;}
+
+.theme-toggle {
+  cursor:pointer;
+  font-size:18px;
+  color:var(--muted);
+  transition: var(--transition);
+  width:44px;
+  height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:14px;
+  border:1.5px solid var(--border);
+  background:var(--card);
+  backdrop-filter:var(--blur);
+  flex-shrink:0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.theme-toggle:hover { 
+  color:var(--primary);
+  border-color:var(--primary);
+  transform: translateY(-2px);
+}
+
+/* 主内容区 */
+main { 
+  max-width:1400px; 
+  margin:0 auto; 
+  padding:30px 20px; 
+}
+
+/* 站长精选 */
+.featured-section {
+  margin-bottom:40px;
+}
+.featured-header {
+  text-align:center;
+  margin-bottom:30px;
+  position: relative;
+}
+.featured-header h2 {
+  font-size:clamp(24px, 3vw, 32px);
+  font-weight:800;
+  color:var(--text);
+  margin-bottom:12px;
+  display: inline-block;
+  position: relative;
+}
+.featured-header h2::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: var(--gradient-primary);
+  border-radius: 2px;
+}
+.featured-header p {
+  font-size:clamp(14px, 1.5vw, 16px);
+  color:var(--muted);
+  max-width:500px;
+  margin:0 auto;
+  line-height: 1.6;
+}
+.featured-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+  gap:20px;
+}
+
+/* 可折叠分类 */
+details {
+  background:var(--card);
+  backdrop-filter:var(--blur);
+  border:1.5px solid var(--border);
+  border-radius:var(--radius);
+  padding:24px;
+  margin-bottom:20px;
+  box-shadow:var(--shadow);
+  transition: var(--transition);
+  overflow: hidden;
+}
+details:hover {
+  border-color:color-mix(in srgb, var(--primary) 40%, transparent);
+  box-shadow: var(--shadow-lg);
+}
+details[open] {
+  border-color:var(--primary);
+  box-shadow: 0 8px 32px rgba(0, 113, 227, 0.15);
+}
+details[open] summary {
+  color:var(--primary);
+}
+summary {
+  font-weight:700;
+  font-size:18px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:8px 0;
+  user-select:none;
+  transition: var(--transition);
+}
+summary::-webkit-details-marker {
+  display:none;
+}
+summary:after {
+  content:"";
+  display:inline-block;
+  width:20px;
+  height:20px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size:contain;
+  transition:transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-left:auto;
+}
+details[open] summary:after {
+  transform:rotate(180deg);
+}
+
+/* 工具网格 */
+.tools-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
+  gap:16px;
+  margin-top:20px;
+  padding-top:20px;
+  border-top:1px solid var(--border);
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 工具卡片 */
+.tool-card {
+  background: var(--card);
+  border:1.5px solid var(--border);
+  border-radius:16px;
+  padding:18px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  text-decoration:none;
+  color:inherit;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.tool-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--gradient-primary);
+  opacity: 0;
+  transition: var(--transition);
+  z-index: 0;
+}
+.tool-card:hover {
+  transform:translateY(-6px);
+  box-shadow:var(--shadow-lg);
+  border-color:var(--primary);
+}
+.tool-card:hover::before {
+  opacity: 0.03;
+}
+.tool-card.hidden { 
+  display:none;
+}
+.tool-card.favorite .tool-icon {
+  background: var(--gradient-warning);
+  color: white;
+}
+.tool-icon {
+  width:48px;
+  height:48px;
+  border-radius:14px;
+  background: rgba(0,0,0,0.05);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  color:var(--primary);
+  font-size:16px;
+  flex-shrink:0;
+  position: relative;
+  z-index: 1;
+  transition: var(--transition);
+}
+[data-theme="dark"] .tool-icon {
+  background: rgba(255,255,255,0.1);
+}
+.tool-card:hover .tool-icon {
+  transform: scale(1.1);
+}
+.tool-info { 
+  flex:1;
+  position: relative;
+  z-index: 1;
+}
+.tool-name {
+  font-weight:700;
+  font-size:16px;
+  margin-bottom:4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.tool-name .favorite-icon {
+  color: var(--warning);
+  font-size: 12px;
+}
+.tool-desc {
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.5;
+}
+.tool-actions {
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: var(--transition);
+}
+.tool-card:hover .tool-actions {
+  opacity: 1;
+  transform: translateX(0);
+}
+.tool-action {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--border);
+  color: var(--muted);
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  z-index: 2;
+}
+.tool-action:hover {
+  background: var(--primary);
+  color: white;
+}
+
+/* 快速访问栏 */
+.quick-access {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.quick-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--gradient-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 113, 227, 0.3);
+  transition: var(--transition);
+}
+.quick-btn:hover {
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 12px 32px rgba(0, 113, 227, 0.4);
+}
+.quick-btn.secondary {
+  background: var(--gradient-success);
+}
+
+/* 模态框 */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal.active {
+  display: flex;
+  animation: fadeIn 0.3s ease;
+}
+.modal-content {
+  background: var(--card);
+  border-radius: 24px;
+  padding: 32px;
+  max-width: 500px;
+  width: 100%;
+  border: 1.5px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.modal-header h3 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+}
+.modal-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--border);
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  transition: var(--transition);
+}
+.modal-close:hover {
+  background: var(--danger);
+  color: white;
+}
+.modal-body {
+  margin-bottom: 24px;
+}
+.modal-body p {
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+.modal-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+}
+.stat-box {
+  background: rgba(0,0,0,0.05);
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+}
+[data-theme="dark"] .stat-box {
+  background: rgba(255,255,255,0.05);
+}
+.stat-value {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* 页脚 */
+footer {
+  text-align:center;
+  padding:50px 20px 30px;
+  color:var(--muted);
+  font-size:14px;
+  border-top:1px solid var(--border);
+  margin-top:60px;
+  position: relative;
+}
+footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: var(--gradient-primary);
+  border-radius: 2px;
+}
+
+/* 无搜索结果提示 */
+.no-results {
+  text-align:center;
+  padding:80px 20px;
+  color:var(--muted);
+  font-size:18px;
+  grid-column:1/-1;
+}
+.no-results i {
+  font-size: 48px;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction:column;
+    align-items:stretch;
+    gap:16px;
+  }
+  
+  .header-controls {
+    max-width:none;
+    justify-content:stretch;
+  }
+  
+  .search {
+    max-width:none;
+  }
+  
+  main {
+    padding:20px 16px;
+  }
+  
+  .featured-grid,
+  .tools-grid {
+    grid-template-columns:1fr;
+  }
+  
+  details {
+    padding:20px 16px;
+  }
+  
+  .quick-access {
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  .quick-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+  }
+  
+  .modal-content {
+    padding: 24px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title-section h1 {
+    font-size:22px;
+  }
+  
+  .logo {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+  
+  .tool-card {
+    padding:16px;
+  }
+  
+  /* 已删除 .stats 相关样式 */
+}
+</style>
+</head>
+<body data-theme="light">
+
+<header>
+  <div class="header-container">
+    <div class="title-section">
+      <div class="logo">UV</div>
+      <div>
+        <h1>🧰 UV 工具箱</h1>
+        <!-- 已删除统计数据区域 -->
+      </div>
+    </div>
+    <div class="header-controls">
+      <div class="search">
+        <div class="search-icon"><i class="fas fa-search"></i></div>
+        <input id="searchInput" placeholder="搜索工具或服务…" />
+        <button class="clear" id="clearBtn"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- 站长精选 -->
+  <section class="featured-section">
+    <div class="featured-header">
+      <h2>⭐ 站长精选</h2>
+      <p>最常用、最核心的工具推荐，点击星标可收藏</p>
+    </div>
+    <div class="featured-grid">
+      <a class="tool-card favorite" href="https://chat.openai.com/" target="_blank" data-title="ChatGPT" data-desc="日常必开，写代码、文案、查询资料" data-category="AI 平台">
+        <div class="tool-icon"><i class="fas fa-robot"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">ChatGPT <span class="favorite-icon"><i class="fas fa-star"></i></span></div>
+          <div class="tool-desc">日常必开，写代码、文案、查询资料</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="ChatGPT"><i class="fas fa-star"></i></button>
+          <button class="tool-action info-btn" data-tool="ChatGPT"><i class="fas fa-info"></i></button>
+        </div>
+      </a>
+      <a class="tool-card favorite" href="https://dash.cloudflare.com/" target="_blank" data-title="Cloudflare" data-desc="CDN+DNS+防护，一站式网络基础设施" data-category="应用容器">
+        <div class="tool-icon"><i class="fas fa-cloud"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">Cloudflare <span class="favorite-icon"><i class="fas fa-star"></i></span></div>
+          <div class="tool-desc">CDN+DNS+防护，一站式网络基础设施</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="Cloudflare"><i class="fas fa-star"></i></button>
+          <button class="tool-action info-btn" data-tool="Cloudflare"><i class="fas fa-info"></i></button>
+        </div>
+      </a>
+      <a class="tool-card favorite" href="https://www.deepseek.com/" target="_blank" data-title="DeepSeek" data-desc="AI 助手，代码与文案创作" data-category="AI 平台">
+        <div class="tool-icon"><i class="fas fa-brain"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">DeepSeek <span class="favorite-icon"><i class="fas fa-star"></i></span></div>
+          <div class="tool-desc">AI 助手，代码与文案创作</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="DeepSeek"><i class="fas fa-star"></i></button>
+          <button class="tool-action info-btn" data-tool="DeepSeek"><i class="fas fa-info"></i></button>
+        </div>
+      </a>
+      <a class="tool-card favorite" href="https://github.com/" target="_blank" data-title="GitHub" data-desc="全球最大代码托管与协作平台" data-category="应用容器">
+        <div class="tool-icon"><i class="fab fa-github"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">GitHub <span class="favorite-icon"><i class="fas fa-star"></i></span></div>
+          <div class="tool-desc">全球最大代码托管与协作平台</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="GitHub"><i class="fas fa-star"></i></button>
+          <button class="tool-action info-btn" data-tool="GitHub"><i class="fas fa-info"></i></button>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- 论坛 & 社区 -->
+  <details>
+    <summary><i class="fas fa-comments"></i> 论坛 & 社区</summary>
+    <div class="tools-grid">
+      <a class="tool-card" href="https://linux.do/" target="_blank" data-title="linux.do" data-desc="Linux 技术讨论社区" data-category="论坛 & 社区">
+        <div class="tool-icon"><i class="fab fa-linux"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">linux.do</div>
+          <div class="tool-desc">Linux 技术讨论社区</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="linux.do"><i class="far fa-star"></i></button>
+        </div>
+      </a>
+      <a class="tool-card" href="https://www.nodeloc.com/" target="_blank" data-title="nodeloc" data-desc="节点与服务器交流社区" data-category="论坛 & 社区">
+        <div class="tool-icon"><i class="fas fa-server"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">nodeloc</div>
+          <div class="tool-desc">节点与服务器交流社区</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="nodeloc"><i class="far fa-star"></i></button>
+        </div>
+      </a>
+      <a class="tool-card" href="https://ygkkk.blogspot.com/" target="_blank" data-title="甬哥侃侃侃" data-desc="技术博客与资源分享" data-category="论坛 & 社区">
+        <div class="tool-icon"><i class="fas fa-blog"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">甬哥侃侃侃</div>
+          <div class="tool-desc">技术博客与资源分享</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="甬哥侃侃侃"><i class="far fa-star"></i></button>
+        </div>
+      </a>
+    </div>
+  </details>
+
+  <!-- 域名 / DNS -->
+  <details>
+    <summary><i class="fas fa-globe"></i> 域名 / DNS</summary>
+    <div class="tools-grid">
+      <a class="tool-card" href="https://dnshe.com/" target="_blank" data-title="DNSHe" data-desc="域名注册与管理" data-category="域名 / DNS">
+        <div class="tool-icon"><i class="fas fa-registered"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">DNSHe</div>
+          <div class="tool-desc">域名注册与管理</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="DNSHe"><i class="far fa-star"></i></button>
+        </div>
+      </a>
+      <a class="tool-card" href="https://gv.uy/" target="_blank" data-title="GV.UY" data-desc="短域名服务" data-category="域名 / DNS">
+        <div class="tool-icon"><i class="fas fa-link"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">GV.UY</div>
+          <div class="tool-desc">短域名服务</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="GV.UY"><i class="far fa-star"></i></button>
+        </div>
+      </a>
+      <a class="tool-card" href="https://dash.domain.digitalplat.org/auth/login?next=%2F" target="_blank" data-title="Digital" data-desc="数字平台域名管理" data-category="域名 / DNS">
+        <div class="tool-icon"><i class="fas fa-digital-tachograph"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">Digital</div>
+          <div class="tool-desc">数字平台域名管理</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="Digital"><i class="far fa-star"></i></button>
+        </div>
+      </a>
+      <a class="tool-card" href="https://www.l53.net/" target="_blank" data-title="L53" data-desc="域名注册服务" data-category="域名 / DNS">
+        <div class="tool-icon"><i class="fas fa-network-wired"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">L53</div>
+          <div class="tool-desc">域名注册服务</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="L53"><i class="far fa-star"></i></button>
+        </div>
+      </a>
+      <a class="tool-card" href="https://store.9v4.com/" target="_blank" data-title="94V" data-desc="域名与主机服务" data-category="域名 / DNS">
+        <div class="tool-icon">94V</div>
+        <div class="tool-info">
+          <div class="tool-name">94V</div>
+          <div class="tool-desc">域名与主机服务</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="94V"><i class="far fa-star"></i></button>
+        </div>
+      </a>
+    </div>
+  </details>
+
+  <!-- AI 平台 -->
+  <details>
+    <summary><i class="fas fa-robot"></i> AI 平台</summary>
+    <div class="tools-grid">
+      <a class="tool-card" href="https://chat.openai.com/" target="_blank" data-title="ChatGPT" data-desc="OpenAI 官方聊天平台" data-category="AI 平台">
+        <div class="tool-icon"><i class="fas fa-robot"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">ChatGPT</div>
+          <div class="tool-desc">OpenAI 官方聊天平台</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="ChatGPT"><i class="fas fa-star"></i></button>
+          <button class="tool-action info-btn" data-tool="ChatGPT"><i class="fas fa-info"></i></button>
+        </div>
+      </a>
+      <a class="tool-card" href="https://gemini.google.com/" target="_blank" data-title="Gemini" data-desc="Google AI 助手" data-category="AI 平台">
+        <div class="tool-icon"><i class="fab fa-google"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">Gemini</div>
+          <div class="tool-desc">Google AI 助手</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="Gemini"><i class="far fa-star"></i></button>
+        </div>
+      </a>
+      <a class="tool-card" href="https://www.deepseek.com/" target="_blank" data-title="DeepSeek" data-desc="深度求索 AI 模型平台" data-category="AI 平台">
+        <div class="tool-icon"><i class="fas fa-brain"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">DeepSeek</div>
+          <div class="tool-desc">深度求索 AI 模型平台</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="DeepSeek"><i class="fas fa-star"></i></button>
+          <button class="tool-action info-btn" data-tool="DeepSeek"><i class="fas fa-info"></i></button>
+        </div>
+      </a>
+    </div>
+  </details>
+
+  <!-- 应用容器 -->
+  <details>
+    <summary><i class="fas fa-box-open"></i> 应用容器</summary>
+    <div class="tools-grid">
+      <a class="tool-card" href="https://github.com/" target="_blank" data-title="GitHub" data-desc="全球最大代码托管平台" data-category="应用容器">
+        <div class="tool-icon"><i class="fab fa-github"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">GitHub</div>
+          <div class="tool-desc">全球最大代码托管平台</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="GitHub"><i class="fas fa-star"></i></button>
+          <button class="tool-action info-btn" data-tool="GitHub"><i class="fas fa-info"></i></button>
+        </div>
+      </a>
+      <a class="tool-card" href="https://dash.cloudflare.com/" target="_blank" data-title="Cloudflare" data-desc="CDN / 边缘计算 / 部署" data-category="应用容器">
+        <div class="tool-icon"><i class="fas fa-cloud"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">Cloudflare</div>
+          <div class="tool-desc">CDN / 边缘计算 / 部署</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="Cloudflare"><i class="fas fa-star"></i></button>
+          <button class="tool-action info-btn" data-tool="Cloudflare"><i class="fas fa-info"></i></button>
+        </div>
+      </a>
+      <a class="tool-card" href="https://dashboard.render.com/login" target="_blank" data-title="Render" data-desc="现代化应用部署平台" data-category="应用容器">
+        <div class="tool-icon"><i class="fas fa-server"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">Render</div>
+          <div class="tool-desc">现代化应用部署平台</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="Render"><i class="far fa-star"></i></button>
+        </div>
+      </a>
+      <a class="tool-card" href="https://signin.koyeb.com/" target="_blank" data-title="Koyeb" data-desc="无服务器应用部署" data-category="应用容器">
+        <div class="tool-icon"><i class="fas fa-bolt"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">Koyeb</div>
+          <div class="tool-desc">无服务器应用部署</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="Koyeb"><i class="far fa-star"></i></button>
+        </div>
+      </a>
+      <a class="tool-card" href="https://zeabur.app/" target="_blank" data-title="Zeabur" data-desc="开发者友好的部署平台" data-category="应用容器">
+        <div class="tool-icon"><i class="fas fa-ship"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">Zeabur</div>
+          <div class="tool-desc">开发者友好的部署平台</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="Zeabur"><i class="far fa-star"></i></button>
+        </div>
+      </a>
+      <a class="tool-card" href="https://run.claw.cloud/" target="_blank" data-title="ClawCloud" data-desc="云原生应用部署" data-category="应用容器">
+        <div class="tool-icon"><i class="fas fa-paw"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">ClawCloud</div>
+          <div class="tool-desc">云原生应用部署</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="ClawCloud"><i class="far fa-star"></i></button>
+        </div>
+      </a>
+      <a class="tool-card" href="https://leaflow.net/login" target="_blank" data-title="Leaflow" data-desc="应用部署与管理" data-category="应用容器">
+        <div class="tool-icon"><i class="fas fa-leaf"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">Leaflow</div>
+          <div class="tool-desc">应用部署与管理</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="Leaflow"><i class="far fa-star"></i></button>
+        </div>
+      </a>
+      <a class="tool-card" href="https://huggingface.co/login" target="_blank" data-title="Hugging Face" data-desc="AI 模型部署与托管" data-category="应用容器">
+        <div class="tool-icon"><i class="fas fa-face-smile"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">Hugging Face</div>
+          <div class="tool-desc">AI 模型部署与托管</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="Hugging Face"><i class="far fa-star"></i></button>
+        </div>
+      </a>
+      <a class="tool-card" href="https://www.sap.com/products/technology-platform/trial.html" target="_blank" data-title="SAP" data-desc="企业级应用平台" data-category="应用容器">
+        <div class="tool-icon"><i class="fas fa-building"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">SAP</div>
+          <div class="tool-desc">企业级应用平台</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="SAP"><i class="far fa-star"></i></button>
+        </div>
+      </a>
+    </div>
+  </details>
+
+  <!-- 监控 / 解码 / 检测 -->
+  <details>
+    <summary><i class="fas fa-chart-line"></i> 监控 / 解码 / 检测</summary>
+    <div class="tools-grid">
+      <a class="tool-card" href="https://ayo.94v.net/status/sub" target="_blank" data-title="Uptime Kuma" data-desc="服务监控与状态检测" data-category="监控 / 解码 / 检测">
+        <div class="tool-icon"><i class="fas fa-heartbeat"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">Uptime Kuma</div>
+          <div class="tool-desc">服务监控与状态检测</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="Uptime Kuma"><i class="fas fa-star"></i></button>
+          <button class="tool-action info-btn" data-tool="Uptime Kuma"><i class="fas fa-info"></i></button>
+        </div>
+      </a>
+      <a class="tool-card" href="https://www.cloudflare.com/cdn-cgi/trace" target="_blank" data-title="CF Trace" data-desc="Cloudflare 网络检测" data-category="监控 / 解码 / 检测">
+        <div class="tool-icon"><i class="fas fa-search"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">CF Trace</div>
+          <div class="tool-desc">Cloudflare 网络检测</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="CF Trace"><i class="far fa-star"></i></button>
+        </div>
+      </a>
+      <a class="tool-card" href="https://ippure.com/" target="_blank" data-title="IPPure" data-desc="IP 地址查询与定位" data-category="监控 / 解码 / 检测">
+        <div class="tool-icon"><i class="fas fa-map-marker-alt"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">IPPure</div>
+          <div class="tool-desc">IP 地址查询与定位</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="IPPure"><i class="far fa-star"></i></button>
+        </div>
+      </a>
+      <a class="tool-card" href="https://scamalytics.com/" target="_blank" data-title="Scamalytics" data-desc="网络风险分析与检测" data-category="监控 / 解码 / 检测">
+        <div class="tool-icon"><i class="fas fa-shield-alt"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">Scamalytics</div>
+          <div class="tool-desc">网络风险分析与检测</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="Scamalytics"><i class="far fa-star"></i></button>
+        </div>
+      </a>
+      <a class="tool-card" href="https://dnschecker.org/" target="_blank" data-title="DNSChecker" data-desc="全球 DNS 检测工具" data-category="监控 / 解码 / 检测">
+        <div class="tool-icon"><i class="fas fa-check-circle"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">DNSChecker</div>
+          <div class="tool-desc">全球 DNS 检测工具</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="DNSChecker"><i class="far fa-star"></i></button>
+        </div>
+      </a>
+      <a class="tool-card" href="https://proxyip.chatkg.qzz.io/" target="_blank" data-title="ProxyIP" data-desc="代理 IP 检测工具" data-category="监控 / 解码 / 检测">
+        <div class="tool-icon"><i class="fas fa-user-secret"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">ProxyIP</div>
+          <div class="tool-desc">代理 IP 检测工具</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="ProxyIP"><i class="far fa-star"></i></button>
+        </div>
+      </a>
+      <a class="tool-card" href="https://www.base64decode.org/zh/" target="_blank" data-title="Base64 Decode" data-desc="Base64 编码解码工具" data-category="监控 / 解码 / 检测">
+        <div class="tool-icon"><i class="fas fa-code"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">Base64 Decode</div>
+          <div class="tool-desc">Base64 编码解码工具</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="Base64 Decode"><i class="far fa-star"></i></button>
+        </div>
+      </a>
+      <a class="tool-card" href="https://obfuscator.io/legacy-playground" target="_blank" data-title="Obfuscator" data-desc="JavaScript 代码混淆" data-category="监控 / 解码 / 检测">
+        <div class="tool-icon"><i class="fab fa-js"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">Obfuscator</div>
+          <div class="tool-desc">JavaScript 代码混淆</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="Obfuscator"><i class="far fa-star"></i></button>
+        </div>
+      </a>
+      <a class="tool-card" href="https://toolbox.googleapps.com/apps/dig/#A/" target="_blank" data-title="DNS lookup" data-desc="DNS A 记录查询工具" data-category="监控 / 解码 / 检测">
+        <div class="tool-icon"><i class="fas fa-search"></i></div>
+        <div class="tool-info">
+          <div class="tool-name">DNS lookup</div>
+          <div class="tool-desc">DNS A 记录查询工具</div>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-action favorite-btn" data-tool="DNS lookup"><i class="far fa-star"></i></button>
+        </div>
+      </a>
+    </div>
+  </details>
+
+  <div class="no-results" id="noResults" style="display:none;">
+    <i class="fas fa-search"></i>
+    <p>没有找到匹配的工具 😢</p>
+    <p style="font-size:14px; margin-top:8px;">尝试其他关键词或浏览分类</p>
+  </div>
+</main>
+
+<!-- 快速访问栏 -->
+<div class="quick-access">
+  <button class="quick-btn" id="scrollTopBtn"><i class="fas fa-arrow-up"></i></button>
+  <button class="quick-btn secondary" id="showFavoritesBtn"><i class="fas fa-star"></i></button>
+</div>
+
+<!-- 工具详情模态框 -->
+<div class="modal" id="toolModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="modalToolName">工具名称</h3>
+      <button class="modal-close" id="closeModal"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <p id="modalToolDesc">工具描述</p>
+      <div class="modal-stats">
+        <div class="stat-box">
+          <div class="stat-value" id="modalCategoryCount">7</div>
+          <div class="stat-label">分类数量</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="modalToolCount">38</div>
+          <div class="stat-label">工具总数</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2024 UV 工具箱 · 专业版 | 一站式运维工具导航平台</p>
+  <p style="margin-top:8px; font-size:13px;">已收录 <span id="footerToolCount">38</span> 个工具， <span id="footerCategoryCount">7</span> 个分类</p>
+</footer>
+
+<script>
+// ========== 全局变量 ==========
+let favorites = JSON.parse(localStorage.getItem('uv-favorites')) || ['ChatGPT', 'Cloudflare', 'DeepSeek', 'GitHub'];
+
+// ========== 主题切换 ==========
+const themeToggle = document.getElementById('themeToggle');
+themeToggle.addEventListener('click', () => {
+  const theme = document.body.getAttribute('data-theme');
+  if (theme === 'light') {
+    document.body.setAttribute('data-theme', 'dark');
+    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+  } else {
+    document.body.setAttribute('data-theme', 'light');
+    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+  }
+  
+  localStorage.setItem('uv-theme', document.body.getAttribute('data-theme'));
+});
+
+// ========== 搜索功能 ==========
+const searchInput = document.getElementById('searchInput');
+const clearBtn = document.getElementById('clearBtn');
+const toolCards = document.querySelectorAll('.tool-card');
+const detailsElements = document.querySelectorAll('details');
+const noResults = document.getElementById('noResults');
+
+document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault();
+    searchInput.focus();
+  }
+  if (e.key === 'Escape' && searchInput.value) {
+    searchInput.value = '';
+    performSearch();
+    searchInput.focus();
+  }
+});
+
+clearBtn.addEventListener('click', () => {
+  searchInput.value = '';
+  performSearch();
+  searchInput.focus();
+});
+
+searchInput.addEventListener('input', performSearch);
+
+function performSearch() {
+  const query = searchInput.value.trim().toLowerCase();
+  let visibleCount = 0;
+  const visibleDetails = new Set();
+  
+  if (!query) {
+    toolCards.forEach(card => card.classList.remove('hidden'));
+    detailsElements.forEach(detail => detail.style.display = '');
+    noResults.style.display = 'none';
+    return;
+  }
+  
+  toolCards.forEach(card => {
+    const title = card.dataset.title.toLowerCase();
+    const desc = card.dataset.desc.toLowerCase();
+    const category = card.dataset.category.toLowerCase();
+    const isMatch = title.includes(query) || desc.includes(query) || category.includes(query);
+    
+    if (isMatch) {
+      card.classList.remove('hidden');
+      visibleCount++;
+      visibleDetails.add(card.closest('details'));
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+  
+  detailsElements.forEach(detail => {
+    if (!query || visibleDetails.has(detail)) {
+      detail.style.display = '';
+    } else {
+      detail.style.display = 'none';
+    }
+  });
+  
+  noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+}
+
+// ========== 收藏功能 ==========
+function updateFavorites() {
+  toolCards.forEach(card => {
+    const toolName = card.dataset.title;
+    const favoriteBtn = card.querySelector('.favorite-btn');
+    const favoriteIcon = card.querySelector('.favorite-icon');
+    
+    if (favorites.includes(toolName)) {
+      card.classList.add('favorite');
+      if (favoriteBtn) favoriteBtn.innerHTML = '<i class="fas fa-star"></i>';
+      if (favoriteIcon) favoriteIcon.innerHTML = '<i class="fas fa-star"></i>';
+    } else {
+      card.classList.remove('favorite');
+      if (favoriteBtn) favoriteBtn.innerHTML = '<i class="far fa-star"></i>';
+      if (favoriteIcon) favoriteIcon.innerHTML = '';
+    }
+  });
+  
+  // 更新收藏数量 - 已删除相关DOM元素
+  // const favoritesCount = document.getElementById('favoritesCount');
+  // favoritesCount.textContent = favorites.length;
+  
+  localStorage.setItem('uv-favorites', JSON.stringify(favorites));
+}
+
+// 初始化收藏按钮事件
+document.addEventListener('click', (e) => {
+  if (e.target.closest('.favorite-btn')) {
+    const btn = e.target.closest('.favorite-btn');
+    const toolName = btn.dataset.tool;
+    const index = favorites.indexOf(toolName);
+    
+    if (index === -1) {
+      favorites.push(toolName);
+      btn.innerHTML = '<i class="fas fa-star"></i>';
+      showNotification(`已收藏 ${toolName}`);
+    } else {
+      favorites.splice(index, 1);
+      btn.innerHTML = '<i class="far fa-star"></i>';
+      showNotification(`已取消收藏 ${toolName}`);
+    }
+    
+    updateFavorites();
+  }
+  
+  // 信息按钮点击
+  if (e.target.closest('.info-btn')) {
+    const btn = e.target.closest('.info-btn');
+    const toolName = btn.dataset.tool;
+    showToolInfo(toolName);
+  }
+});
+
+// ========== 工具信息模态框 ==========
+const toolModal = document.getElementById('toolModal');
+const closeModal = document.getElementById('closeModal');
+const modalToolName = document.getElementById('modalToolName');
+const modalToolDesc = document.getElementById('modalToolDesc');
+
+function showToolInfo(toolName) {
+  // 找到对应的工具卡片
+  const toolCard = Array.from(toolCards).find(card => card.dataset.title === toolName);
+  if (toolCard) {
+    modalToolName.textContent = toolName;
+    modalToolDesc.textContent = toolCard.dataset.desc;
+    toolModal.classList.add('active');
+  }
+}
+
+closeModal.addEventListener('click', () => {
+  toolModal.classList.remove('active');
+});
+
+toolModal.addEventListener('click', (e) => {
+  if (e.target === toolModal) {
+    toolModal.classList.remove('active');
+  }
+});
+
+// ========== 快速访问按钮 ==========
+const scrollTopBtn = document.getElementById('scrollTopBtn');
+const showFavoritesBtn = document.getElementById('showFavoritesBtn');
+
+scrollTopBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+showFavoritesBtn.addEventListener('click', () => {
+  searchInput.value = '';
+  searchInput.focus();
+  
+  // 显示所有卡片
+  toolCards.forEach(card => card.classList.remove('hidden'));
+  detailsElements.forEach(detail => detail.style.display = '');
+  
+  // 隐藏非收藏的卡片
+  toolCards.forEach(card => {
+    const toolName = card.dataset.title;
+    if (!favorites.includes(toolName)) {
+      card.classList.add('hidden');
+    }
+  });
+  
+  // 隐藏空分类
+  detailsElements.forEach(detail => {
+    const hasVisibleCards = Array.from(detail.querySelectorAll('.tool-card'))
+      .some(card => !card.classList.contains('hidden'));
+    
+    if (!hasVisibleCards) {
+      detail.style.display = 'none';
+    }
+  });
+  
+  // 检查是否有收藏
+  const hasFavorites = favorites.length > 0;
+  noResults.style.display = hasFavorites ? 'none' : 'block';
+  if (!hasFavorites) {
+    noResults.innerHTML = `
+      <i class="fas fa-star"></i>
+      <p>暂无收藏的工具</p>
+      <p style="font-size:14px; margin-top:8px;">点击工具卡片上的星号可添加收藏</p>
+    `;
+  }
+  
+  showNotification('显示收藏工具');
+});
+
+// ========== 统计数据 ==========
+function updateStats() {
+  const totalTools = document.querySelectorAll('.tool-card').length;
+  const totalCategories = document.querySelectorAll('details').length;
+  
+  // 已删除相关DOM元素
+  // document.getElementById('totalTools').textContent = totalTools;
+  // document.getElementById('totalCategories').textContent = totalCategories;
+  // document.getElementById('favoritesCount').textContent = favorites.length;
+  
+  document.getElementById('footerToolCount').textContent = totalTools;
+  document.getElementById('footerCategoryCount').textContent = totalCategories;
+  
+  // 更新模态框中的统计数据
+  document.getElementById('modalToolCount').textContent = totalTools;
+  document.getElementById('modalCategoryCount').textContent = totalCategories;
+}
+
+// ========== 通知函数 ==========
+function showNotification(message) {
+  // 创建通知元素
+  const notification = document.createElement('div');
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--gradient-primary);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+    font-weight: 600;
+    transform: translateX(120%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  `;
+  
+  notification.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+  document.body.appendChild(notification);
+  
+  // 显示通知
+  setTimeout(() => {
+    notification.style.transform = 'translateX(0)';
+  }, 10);
+  
+  // 隐藏并移除通知
+  setTimeout(() => {
+    notification.style.transform = 'translateX(120%)';
+    setTimeout(() => {
+      document.body.removeChild(notification);
+    }, 300);
+  }, 3000);
+}
+
+// ========== 页面初始化 ==========
+window.addEventListener('DOMContentLoaded', () => {
+  // 主题初始化
+  const savedTheme = localStorage.getItem('uv-theme') || 'light';
+  document.body.setAttribute('data-theme', savedTheme);
+  themeToggle.innerHTML = savedTheme === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+  
+  // 收藏初始化
+  updateFavorites();
+  
+  // 统计数据初始化
+  updateStats();
+  
+  // 显示欢迎消息
+  setTimeout(() => {
+    showNotification(`欢迎使用 UV 工具箱，已收录 ${document.querySelectorAll('.tool-card').length} 个工具`);
+  }, 1000);
+});
+
+// 监听窗口滚动，显示/隐藏返回顶部按钮
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 300) {
+    scrollTopBtn.style.display = 'flex';
+  } else {
+    scrollTopBtn.style.display = 'flex';
+  }
+});
+</script>
+</body>
+
+<!-- Mirrored from uv.94v.net/ by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 15 Feb 2026 03:48:09 GMT -->
+</html>
